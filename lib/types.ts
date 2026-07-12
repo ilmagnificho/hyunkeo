@@ -5,6 +5,8 @@ export interface CastMember {
   is_maegi: boolean;
   emoji: string;
   color: string;
+  tagline?: string; // 캐치프레이즈 (migration-001)
+  bio?: string;     // 관전 포인트 (migration-001)
 }
 
 export interface CoupleInfo {

@@ -77,19 +77,29 @@ export default function CoupleDetail({ coupleId }: { coupleId: string }) {
           )}
         </div>
 
-        <div className="mt-4 flex items-center justify-center gap-3">
-          <div className="text-center">
+        <div className="mt-4 flex items-start justify-center gap-3">
+          <div className="w-28 text-center">
             <Badge member={couple.m} size={76} />
             <p className="mt-1.5 text-sm font-bold text-ink">
               {couple.m.name} <span className="text-xs">{couple.m.emoji}</span>
             </p>
+            {couple.m.tagline && (
+              <p className="mt-0.5 text-[10px] leading-tight text-muted">
+                &ldquo;{couple.m.tagline}&rdquo;
+              </p>
+            )}
           </div>
-          <span className="text-2xl text-accent motion-safe:animate-heart-pop">💘</span>
-          <div className="text-center">
+          <span className="mt-6 text-2xl text-accent motion-safe:animate-heart-pop">💘</span>
+          <div className="w-28 text-center">
             <Badge member={couple.f} size={76} />
             <p className="mt-1.5 text-sm font-bold text-ink">
               {couple.f.name} <span className="text-xs">{couple.f.emoji}</span>
             </p>
+            {couple.f.tagline && (
+              <p className="mt-0.5 text-[10px] leading-tight text-muted">
+                &ldquo;{couple.f.tagline}&rdquo;
+              </p>
+            )}
           </div>
         </div>
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { formatKstTimestamp } from "@/lib/kst";
 import { drawAvatarOnCanvas } from "@/lib/pixelart";
+import { track } from "@/lib/analytics";
 import type { PredictionData } from "@/lib/types";
 
 const W = 1080;
@@ -166,12 +167,14 @@ export default function SajiCard({ predictionId }: { predictionId: string }) {
     a.href = canvas.toDataURL("image/png");
     a.click();
     showToast("이미지를 저장했어요! 📸");
+    track("card_save", { prediction_id: predictionId });
   }
 
   async function copyLink() {
     try {
       await navigator.clipboard.writeText(window.location.href);
       showToast("링크를 복사했어요! 🔗");
+      track("card_copy_link", { prediction_id: predictionId });
     } catch {
       showToast("복사에 실패했어요");
     }

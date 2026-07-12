@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getDeviceId, hasCheeredToday, markCheeredToday } from "@/lib/device";
+import { track } from "@/lib/analytics";
 
 export default function CheerButton({
   coupleId,
@@ -43,6 +44,7 @@ export default function CheerButton({
           setTimeout(() => setPop(false), 400);
           setTimeout(() => setFloatOne(false), 950);
           setToast("하트 전달 완료! 내일 또 줄 수 있어요");
+          track("cheer", { couple_id: coupleId });
           onCheered?.();
         }
       } else if (json.reason === "rate_limited") {

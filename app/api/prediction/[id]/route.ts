@@ -49,7 +49,7 @@ export async function GET(
     const [{ data: round }, { data: coupleRows }, { data: castRows }] = await Promise.all([
       sb.from("rounds").select("label").eq("round_no", pred.round_no).maybeSingle(),
       sb.from("couples").select("id,m_id,f_id").in("id", pred.couple_ids),
-      sb.from("cast_members").select("id,name,gender,is_maegi,emoji,color"),
+      sb.from("cast_members").select("*"),
     ]);
 
     const castById = new Map<string, CastMember>(

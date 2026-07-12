@@ -11,7 +11,9 @@ create table cast_members (
   gender text not null check (gender in ('M','F')),
   is_maegi boolean default false,
   emoji text not null,
-  color text not null
+  color text not null,
+  tagline text not null default '',  -- 캐치프레이즈 (도감/차트 노출)
+  bio text not null default ''       -- 관전 포인트 2-3문장
 );
 
 create table couples (

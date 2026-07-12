@@ -61,6 +61,45 @@ npm run build  # 프로덕션 빌드 확인
 2. Environment Variables 에 위 두 변수 등록 (`SUPABASE_SERVICE_ROLE_KEY` 는 반드시 서버 전용)
 3. Deploy — 끝. (프레임워크 자동 감지: Next.js)
 
+### 선택 환경변수
+
+```
+NEXT_PUBLIC_SITE_URL=https://hyunkeo.vercel.app  # 커스텀 도메인 쓰면 변경 (OG/sitemap 기준 URL)
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX                   # GA4 측정 ID (없으면 트래킹 비활성)
+```
+
+## 출연자 페르소나 (마이그레이션)
+
+캐릭터 서사(캐치프레이즈/관전포인트)는 `supabase/migration-001-cast-personas.sql` 을
+SQL Editor 에서 실행하면 활성화됩니다. 문구는 방송 내용에 맞게 `update cast_members set
+tagline=..., bio=... where id='m1';` 으로 자유롭게 수정하세요. 마이그레이션을 실행하지
+않아도 사이트는 정상 동작합니다(페르소나 미표시).
+
+## 분석 (GA4)
+
+`NEXT_PUBLIC_GA_ID` 설정 시 자동 수집되는 이벤트 (`lib/analytics.ts`):
+
+| 이벤트 | 의미 | 파라미터 |
+|---|---|---|
+| `cheer` | 하트 주기 | couple_id |
+| `predict_start` | 픽 플로우 진입 | round_no |
+| `predict_lock` | **픽 락인 (핵심 전환)** | round_no, couples_count |
+| `card_save` | **성지 카드 저장 (바이럴)** | prediction_id |
+| `card_copy_link` | 카드 링크 복사 | prediction_id |
+| `comment_submit` | 훈수 등록 | couple_id |
+| `chart_tab` | 차트 탭 전환 | tab |
+
+GA4 에서 `predict_lock`/`card_save` 를 전환(Key event)으로 지정하는 것을 추천합니다.
+
+## SEO / GEO / OG
+
+- `app/sitemap.ts` — 커플 상세 36개 포함 동적 생성 (`/sitemap.xml`)
+- `app/robots.ts` — `/api/` 차단, sitemap 연결
+- 구조화 데이터: WebSite(전역), FAQPage(`/about`) — 생성형 검색(GEO) 대응
+- 커플 페이지 동적 메타: "재서♥수지 실시간 케미 온도·하트 순위" (롱테일 검색 유입)
+- OG/트위터 카드: 기본 `/api/og`, 성지 카드는 `/api/og?id=...`
+- 런칭 후 할 일: Google Search Console 에 sitemap 제출, 네이버 서치어드바이저 등록
+
 ## 시즌 종영 후 운영 가이드
 
 ### 1. 정답 입력

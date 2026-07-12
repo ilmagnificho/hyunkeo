@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import Badge from "./Badge";
 import Countdown from "./Countdown";
 import { getDeviceId, getSavedNickname, saveNickname } from "@/lib/device";
+import { track } from "@/lib/analytics";
 import type { BoardResponse, CoupleInfo, RoundResponse } from "@/lib/types";
 
 const LOCKED_CARD_KEY = "hyunkeo_prediction_"; // + round_no → prediction id
@@ -29,6 +30,7 @@ export default function PredictFlow() {
       .then((r: RoundResponse) => {
         setRound(r);
         if (!r.closed && r.round) {
+          track("predict_start", { round_no: r.round.round_no });
           const saved = localStorage.getItem(LOCKED_CARD_KEY + r.round.round_no);
           if (saved) setLockedCardId(saved);
         }
@@ -76,6 +78,10 @@ export default function PredictFlow() {
       });
       const json = await res.json();
       if (json.ok && json.prediction) {
+        track("predict_lock", {
+          round_no: round?.round?.round_no,
+          couples_count: picked.length,
+        });
         if (round?.round) {
           localStorage.setItem(LOCKED_CARD_KEY + round.round.round_no, json.prediction.id);
         }

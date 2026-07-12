@@ -27,6 +27,26 @@ export function mockCast(): CastMember[] {
       color: m[6],
     });
   }
+  // 페르소나(마이그레이션 파일)도 파싱해서 붙인다
+  try {
+    const mig = readFileSync(
+      join(process.cwd(), "supabase", "migration-001-cast-personas.sql"),
+      "utf8"
+    );
+    const pre =
+      /set tagline = '([^']+)', bio = '([^']+)' where id = '([mf]\d+)'/g;
+    let pm: RegExpExecArray | null;
+    const byId = new Map(cast.map((c) => [c.id, c]));
+    while ((pm = pre.exec(mig))) {
+      const c = byId.get(pm[3]);
+      if (c) {
+        c.tagline = pm[1];
+        c.bio = pm[2];
+      }
+    }
+  } catch {
+    // 페르소나 없이 동작
+  }
   cachedCast = cast;
   return cast;
 }

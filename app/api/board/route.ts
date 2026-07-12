@@ -29,7 +29,7 @@ export async function GET() {
 
     const [{ data: castRows, error: castErr }, { data: coupleRows, error: coupleErr }] =
       await Promise.all([
-        sb.from("cast_members").select("id,name,gender,is_maegi,emoji,color"),
+        sb.from("cast_members").select("*"),
         sb.from("couples").select("id,m_id,f_id"),
       ]);
     if (castErr || coupleErr || !castRows || !coupleRows) {

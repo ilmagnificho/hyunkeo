@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Badge from "./Badge";
+import CastStrip from "./CastStrip";
 import CheerButton from "./CheerButton";
 import type { BoardResponse, BoardRow, CoupleInfo } from "@/lib/types";
+import { track } from "@/lib/analytics";
 
 type Tab = "all" | "hot" | "maegi";
 
@@ -315,6 +317,7 @@ export default function Board() {
   return (
     <div>
       <HeartHero data={data} />
+      <CastStrip couples={data.couples ?? []} />
       <TickerTape rows={data.rows} />
 
       <p className="px-4 pt-3 pb-2 text-xs font-bold text-ink/80">{chemiNews(data)}</p>
@@ -342,7 +345,10 @@ export default function Board() {
             ).map(([key, label]) => (
               <button
                 key={key}
-                onClick={() => setTab(key)}
+                onClick={() => {
+                  setTab(key);
+                  track("chart_tab", { tab: key });
+                }}
                 className={`rounded-full px-3.5 py-1.5 text-xs font-bold transition-colors ${
                   tab === key
                     ? "bg-accent text-white shadow-sm"

@@ -9,6 +9,7 @@ import {
   markReported,
 } from "@/lib/device";
 import type { CommentRow } from "@/lib/types";
+import { track } from "@/lib/analytics";
 
 export default function CommentSection({ coupleId }: { coupleId: string }) {
   const [comments, setComments] = useState<CommentRow[]>([]);
@@ -53,6 +54,7 @@ export default function CommentSection({ coupleId }: { coupleId: string }) {
         setBody("");
         setComments((prev) => [json.comment, ...prev].slice(0, 50));
         showMsg("훈수 등록 완료! 💬");
+        track("comment_submit", { couple_id: coupleId });
       } else if (json.reason === "moderation") {
         showMsg(json.message ?? "표현을 조금 바꿔주세요 🙏");
       } else if (json.reason === "rate_limited") {

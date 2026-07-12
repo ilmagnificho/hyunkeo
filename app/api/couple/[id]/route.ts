@@ -41,7 +41,7 @@ export async function GET(
       await Promise.all([
         sb
           .from("cast_members")
-          .select("id,name,gender,is_maegi,emoji,color")
+          .select("*")
           .in("id", [couple.m_id, couple.f_id]),
         sb.from("cheers").select("id", { count: "exact", head: true }).eq("couple_id", id),
         sb.from("cheers").select("id", { count: "exact", head: true }),

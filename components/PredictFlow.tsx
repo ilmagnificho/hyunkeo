@@ -117,15 +117,15 @@ export default function PredictFlow() {
   if (round.closed) {
     return (
       <div className="py-16 text-center">
-        <p className="text-lg font-bold text-white">예측 접수가 모두 마감됐어요</p>
+        <p className="text-lg font-bold text-ink">모든 픽이 마감됐어요</p>
         <p className="mt-2 text-sm text-muted">
-          최종회가 공개됐습니다. 시세판에서 결과의 여운을 함께해요.
+          최종회가 공개됐습니다. 차트에서 결과의 여운을 함께해요.
         </p>
         <Link
           href="/"
-          className="mt-6 inline-block rounded-xl bg-accent px-5 py-2.5 text-sm font-bold text-white"
+          className="mt-6 inline-block rounded-full bg-accent px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-accent/25"
         >
-          시세판 보러가기
+          차트 보러가기
         </Link>
       </div>
     );
@@ -135,15 +135,15 @@ export default function PredictFlow() {
   if (lockedCardId) {
     return (
       <div className="py-16 text-center">
-        <p className="text-lg font-bold text-white">이번 라운드 예측은 이미 락인됐어요 🔒</p>
+        <p className="text-lg font-bold text-ink">이번 라운드 픽은 이미 락인됐어요 💌</p>
         <p className="mt-2 text-sm text-muted">
-          예측은 제출 후 수정할 수 없어요. 그게 성지의 조건이니까요.
+          픽은 제출 후 수정할 수 없어요. 그게 성지의 조건이니까요.
         </p>
         <Link
           href={`/card/${lockedCardId}`}
-          className="mt-6 inline-block rounded-xl bg-accent px-5 py-2.5 text-sm font-bold text-white"
+          className="mt-6 inline-block rounded-full bg-accent px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-accent/25"
         >
-          내 성지 카드 보기 →
+          내 성지 카드 보기 💌
         </Link>
       </div>
     );
@@ -153,10 +153,10 @@ export default function PredictFlow() {
 
   return (
     <div>
-      <div className="rounded-2xl bg-panel p-4">
+      <div className="rounded-3xl bg-gradient-to-br from-accent-soft via-panel to-panel border border-line p-4 shadow-sm">
         <p className="text-xs font-bold text-accent">ROUND {r.round_no} · {r.label}</p>
-        <p className="mt-1 text-lg font-extrabold text-white">
-          최종커플, 지금 락인하세요
+        <p className="mt-1 text-lg font-extrabold text-ink">
+          최종커플 픽, 지금 락인하세요
         </p>
         <p className="mt-1 text-xs text-muted">
           이른 라운드 적중일수록 높은 훈수 점수 (이번 라운드 적중 시 {r.points}점)
@@ -167,12 +167,12 @@ export default function PredictFlow() {
       </div>
 
       {errorMsg && (
-        <p className="mt-3 rounded-lg bg-up/10 px-3 py-2 text-xs text-up">{errorMsg}</p>
+        <p className="mt-3 rounded-lg bg-up/10 px-3 py-2 text-xs font-semibold text-up">{errorMsg}</p>
       )}
 
       {step === 1 && (
         <div className="mt-5">
-          <label className="text-sm font-bold text-gray-100" htmlFor="nickname">
+          <label className="text-sm font-bold text-ink" htmlFor="nickname">
             1단계 · 닉네임
           </label>
           <p className="mt-1 text-xs text-muted">성지 카드에 새겨질 이름이에요 (1-12자)</p>
@@ -181,7 +181,7 @@ export default function PredictFlow() {
             value={nickname}
             onChange={(e) => setNickname(e.target.value.slice(0, 12))}
             placeholder="예: 훈수왕참견러"
-            className="mt-3 w-full rounded-xl border border-white/10 bg-panel px-4 py-3 text-sm text-white placeholder:text-muted/60 focus:border-accent focus:outline-none"
+            className="mt-3 w-full rounded-xl border border-line bg-panel px-4 py-3 text-sm text-ink placeholder:text-muted/60 focus:border-accent focus:outline-none"
             maxLength={12}
           />
           <button
@@ -192,7 +192,7 @@ export default function PredictFlow() {
               }
             }}
             disabled={nickname.trim().length < 1}
-            className="mt-4 w-full rounded-xl bg-accent py-3 text-sm font-bold text-white disabled:opacity-40"
+            className="mt-4 w-full rounded-2xl bg-accent py-3 text-sm font-bold text-white shadow-md shadow-accent/25 disabled:opacity-40"
           >
             다음 → 커플 선택
           </button>
@@ -201,7 +201,7 @@ export default function PredictFlow() {
 
       {step === 2 && (
         <div className="mt-5">
-          <p className="text-sm font-bold text-gray-100">
+          <p className="text-sm font-bold text-ink">
             2단계 · 최종커플 선택 <span className="text-accent">({picked.length}/3)</span>
           </p>
           <p className="mt-1 text-xs text-muted">
@@ -223,14 +223,14 @@ export default function PredictFlow() {
                 return (
                   <div
                     key={cid}
-                    className="flex items-center justify-between rounded-xl bg-panel px-3 py-2.5"
+                    className="flex items-center justify-between rounded-2xl bg-panel border border-line px-3 py-2.5"
                   >
                     <span className="flex items-center gap-2">
                       <span className="flex -space-x-1.5">
                         <Badge member={c.m} size={28} />
                         <Badge member={c.f} size={28} />
                       </span>
-                      <span className="text-sm font-semibold text-gray-100">
+                      <span className="text-sm font-semibold text-ink">
                         {c.m.name} <span className="text-accent">♥</span> {c.f.name}
                       </span>
                     </span>
@@ -249,9 +249,9 @@ export default function PredictFlow() {
           <button
             onClick={() => setConfirming(true)}
             disabled={picked.length < 1}
-            className="mt-5 w-full rounded-xl bg-accent py-3 text-sm font-bold text-white disabled:opacity-40"
+            className="mt-5 w-full rounded-2xl bg-accent py-3 text-sm font-bold text-white shadow-md shadow-accent/25 disabled:opacity-40"
           >
-            예측 락인하기 🔒
+            픽 락인하기 💌
           </button>
           <button
             onClick={() => setStep(1)}
@@ -268,16 +268,16 @@ export default function PredictFlow() {
           role="dialog"
           aria-modal
         >
-          <div className="w-full max-w-sm rounded-2xl bg-panel-2 p-5">
-            <p className="text-base font-extrabold text-white">정말 락인할까요?</p>
-            <p className="mt-2 text-sm leading-relaxed text-gray-300">
+          <div className="w-full max-w-sm rounded-2xl bg-panel p-5 border border-line shadow-2xl">
+            <p className="text-base font-extrabold text-ink">정말 락인할까요?</p>
+            <p className="mt-2 text-sm leading-relaxed text-ink/70">
               제출 후 수정 불가. 이 타임스탬프가 당신의 성지가 됩니다.
             </p>
-            <div className="mt-3 rounded-xl bg-board/60 px-3 py-2.5">
+            <div className="mt-3 rounded-2xl bg-panel-2/70 px-3 py-2.5">
               {picked.map((cid) => {
                 const c = coupleById.get(cid);
                 return c ? (
-                  <p key={cid} className="py-0.5 text-sm font-semibold text-gray-100">
+                  <p key={cid} className="py-0.5 text-sm font-semibold text-ink">
                     {c.m.name} <span className="text-accent">♥</span> {c.f.name}
                   </p>
                 ) : null;
@@ -288,14 +288,14 @@ export default function PredictFlow() {
               <button
                 onClick={() => setConfirming(false)}
                 disabled={submitting}
-                className="flex-1 rounded-xl bg-white/10 py-3 text-sm font-bold text-gray-200"
+                className="flex-1 rounded-2xl bg-panel-2 py-3 text-sm font-bold text-ink/80"
               >
                 다시 볼게요
               </button>
               <button
                 onClick={submit}
                 disabled={submitting}
-                className="flex-1 rounded-xl bg-accent py-3 text-sm font-bold text-white disabled:opacity-60"
+                className="flex-1 rounded-2xl bg-accent py-3 text-sm font-bold text-white disabled:opacity-60"
               >
                 {submitting ? "락인 중..." : "락인 확정 🔒"}
               </button>
@@ -349,14 +349,14 @@ function CouplePicker({
               onClick={() => pickMan(m.id)}
               className={`flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-left transition-colors ${
                 pendingMan === m.id
-                  ? "bg-accent/20 ring-1 ring-accent"
-                  : "bg-panel hover:bg-panel-2"
+                  ? "bg-accent-soft ring-2 ring-accent"
+                  : "bg-panel border border-line hover:bg-accent-soft/40"
               }`}
             >
               <Badge member={m} size={28} />
-              <span className="text-sm font-semibold text-gray-100">{m.name}</span>
+              <span className="text-sm font-semibold text-ink">{m.name}</span>
               {m.is_maegi && (
-                <span className="ml-auto rounded bg-amber-400/15 px-1 py-0.5 text-[10px] font-bold text-amber-300">
+                <span className="ml-auto rounded bg-lavender/15 px-1 py-0.5 text-[10px] font-bold text-lavender">
                   메기
                 </span>
               )}
@@ -378,13 +378,13 @@ function CouplePicker({
                 onClick={() => pickWoman(f.id)}
                 disabled={!pendingMan}
                 className={`flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-left transition-colors ${
-                  already ? "bg-accent/20 ring-1 ring-accent" : "bg-panel hover:bg-panel-2"
+                  already ? "bg-accent-soft ring-2 ring-accent" : "bg-panel border border-line hover:bg-accent-soft/40"
                 }`}
               >
                 <Badge member={f} size={28} />
-                <span className="text-sm font-semibold text-gray-100">{f.name}</span>
+                <span className="text-sm font-semibold text-ink">{f.name}</span>
                 {f.is_maegi && (
-                  <span className="ml-auto rounded bg-amber-400/15 px-1 py-0.5 text-[10px] font-bold text-amber-300">
+                  <span className="ml-auto rounded bg-lavender/15 px-1 py-0.5 text-[10px] font-bold text-lavender">
                     메기
                   </span>
                 )}

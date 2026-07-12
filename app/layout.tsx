@@ -2,13 +2,13 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "현커거래소 - 모솔연애2 커플 시세판 & 최종커플 예측",
+  title: "현커거래소 - 모솔연애2 커플 차트 & 최종커플 픽",
   description:
-    "모솔연애2 커플 예측은 현커거래소에서! 커플 지지율 시세판 확인하고 최종커플 예측을 락인하세요. 적중하면 당신의 카드가 성지가 됩니다.",
+    "모솔연애2 커플 예측은 현커거래소에서! 실시간 커플 차트 보고 최애에게 하트 주고, 최종커플 픽을 락인하세요. 적중하면 당신의 카드가 성지가 됩니다.",
   keywords: ["모솔연애2", "커플 예측", "현커", "최종커플", "모태솔로지만 연애는 하고 싶어"],
   openGraph: {
-    title: "현커거래소 - 모솔연애2 커플 시세판 & 최종커플 예측",
-    description: "당신의 훈수, 이제 시세로 증명하세요",
+    title: "현커거래소 - 모솔연애2 커플 차트 & 최종커플 픽",
+    description: "당신의 팬심, 이제 차트로 증명하세요",
     type: "website",
     locale: "ko_KR",
   },
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0F1522",
+  themeColor: "#FFF7F0",
 };
 
 export default function RootLayout({

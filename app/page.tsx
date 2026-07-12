@@ -7,7 +7,7 @@ export default function HomePage() {
     <div className="mx-auto max-w-lg">
       <TopBar />
       <main className="pt-2">
-        <h1 className="sr-only">현커거래소 - 모솔연애2 커플 시세판</h1>
+        <h1 className="sr-only">현커거래소 - 모솔연애2 실시간 커플 차트</h1>
         <Board />
       </main>
       <Footer />

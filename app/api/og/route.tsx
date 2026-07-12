@@ -11,7 +11,7 @@ export async function GET(req: Request) {
   const id = searchParams.get("id");
 
   let title = "현커거래소";
-  let sub = "모솔연애2 커플 시세판 & 최종커플 예측";
+  let sub = "모솔연애2 실시간 커플 차트 & 최종커플 픽";
   let lines: string[] = [];
   let ts = "";
 
@@ -30,8 +30,8 @@ export async function GET(req: Request) {
         ]);
         const nameById = new Map((castRows ?? []).map((c) => [c.id, c.name]));
         const byId = new Map((coupleRows ?? []).map((c) => [c.id, c]));
-        title = `${pred.nickname}의 최종커플 예측`;
-        sub = `ROUND ${pred.round_no} 락인 완료`;
+        title = `${pred.nickname}의 최종커플 픽`;
+        sub = `ROUND ${pred.round_no} 락인 완료 💌`;
         lines = pred.couple_ids
           .map((cid: string) => byId.get(cid))
           .filter(Boolean)
@@ -56,14 +56,14 @@ export async function GET(req: Request) {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#0F1522",
-          color: "#fff",
+          backgroundColor: "#FFF7F0",
+          color: "#43303B",
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ fontSize: 40, fontWeight: 800, color: "#FF5C7A" }}>현커거래소</div>
+        <div style={{ fontSize: 40, fontWeight: 800, color: "#FF5C8A" }}>💘 현커거래소</div>
         <div style={{ fontSize: 56, fontWeight: 800, marginTop: 24 }}>{title}</div>
-        <div style={{ fontSize: 30, color: "#8B93A7", marginTop: 12 }}>{sub}</div>
+        <div style={{ fontSize: 30, color: "#A58E99", marginTop: 12 }}>{sub}</div>
         <div
           style={{
             display: "flex",

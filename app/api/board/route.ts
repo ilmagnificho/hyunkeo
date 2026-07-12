@@ -87,6 +87,14 @@ export async function GET() {
 
     const totalUpToYesterday = cheers.filter((c) => c.cheered_on !== today).length;
 
+    // 어제까지 누적 기준 순위 (순위 변동 칩용)
+    const yesterdayRanking = Array.from(agg.entries())
+      .filter(([, a]) => a.upToYesterday > 0)
+      .sort(
+        (x, y) => y[1].upToYesterday - x[1].upToYesterday || x[0].localeCompare(y[0])
+      );
+    const yesterdayRank = new Map(yesterdayRanking.map(([id], i) => [id, i + 1]));
+
     const rows: BoardRow[] = [];
     for (const c of coupleRows as CoupleRowDb[]) {
       const a = agg.get(c.id);
@@ -104,10 +112,15 @@ export async function GET() {
         todayCount: a.today,
         yesterdayCount: a.yesterday,
         deltaPp: Math.round((sharePct - yesterdaySharePct) * 10) / 10,
+        rankChange: null, // 아래에서 현재 순위 확정 후 계산
         spark7: a.spark,
       });
     }
     rows.sort((x, y) => y.total - x.total || x.coupleId.localeCompare(y.coupleId));
+    rows.forEach((row, i) => {
+      const yr = yesterdayRank.get(row.coupleId);
+      row.rankChange = yr === undefined ? null : yr - (i + 1);
+    });
 
     const data: BoardResponse = {
       ok: true,

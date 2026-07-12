@@ -65,11 +65,16 @@ export function mockBoard(): BoardResponse {
         todayCount: spark[6],
         yesterdayCount: spark[5],
         deltaPp: Math.round((rand() * 9 - 4) * 10) / 10,
+        rankChange: 0,
         spark7: spark,
       };
     });
   const sum = rows.reduce((a, r) => a + r.total, 0);
   rows.forEach((r) => (r.sharePct = Math.round((r.total / sum) * 1000) / 10));
   rows.sort((a, b) => b.total - a.total);
+  const rand2 = seededRand(7);
+  rows.forEach((r, i) => {
+    r.rankChange = i === 3 ? null : Math.floor(rand2() * 5) - 2; // 4위는 NEW 데모
+  });
   return { ok: true, totalCheers: sum, rows, couples };
 }

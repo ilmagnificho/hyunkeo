@@ -52,7 +52,7 @@ export default function CommentSection({ coupleId }: { coupleId: string }) {
         saveNickname(nick);
         setBody("");
         setComments((prev) => [json.comment, ...prev].slice(0, 50));
-        showMsg("훈수 등록 완료!");
+        showMsg("훈수 등록 완료! 💬");
       } else if (json.reason === "moderation") {
         showMsg(json.message ?? "표현을 조금 바꿔주세요 🙏");
       } else if (json.reason === "rate_limited") {
@@ -92,8 +92,8 @@ export default function CommentSection({ coupleId }: { coupleId: string }) {
   }
 
   return (
-    <section className="mt-4 rounded-2xl bg-panel p-4">
-      <p className="text-sm font-bold text-gray-100">한 줄 훈수</p>
+    <section className="mt-4 rounded-3xl bg-panel border border-line p-4 shadow-sm">
+      <p className="text-sm font-bold text-ink">한 줄 훈수 💬</p>
       <p className="mt-0.5 text-[11px] text-muted">
         60자 이내 · 비방/외모품평/사생활 언급은 등록되지 않아요
       </p>
@@ -104,16 +104,16 @@ export default function CommentSection({ coupleId }: { coupleId: string }) {
           onChange={(e) => setNickname(e.target.value.slice(0, 12))}
           placeholder="닉네임 (1-12자)"
           maxLength={12}
-          className="w-full rounded-lg border border-white/10 bg-board/60 px-3 py-2 text-sm text-white placeholder:text-muted/60 focus:border-accent focus:outline-none"
+          className="w-full rounded-xl border border-line bg-board/60 px-3 py-2 text-sm text-ink placeholder:text-muted/60 focus:border-accent focus:outline-none"
         />
         <div className="relative">
           <textarea
             value={body}
             onChange={(e) => setBody(e.target.value.slice(0, 60))}
-            placeholder="이 커플에 대한 한 줄 훈수를 남겨보세요"
+            placeholder="이 커플, 어떻게 보고 계세요?"
             maxLength={60}
             rows={2}
-            className="w-full resize-none rounded-lg border border-white/10 bg-board/60 px-3 py-2 text-sm text-white placeholder:text-muted/60 focus:border-accent focus:outline-none"
+            className="w-full resize-none rounded-xl border border-line bg-board/60 px-3 py-2 text-sm text-ink placeholder:text-muted/60 focus:border-accent focus:outline-none"
           />
           <span className="absolute bottom-2 right-2.5 text-[10px] text-muted tabular-nums">
             {body.length}/60
@@ -122,28 +122,31 @@ export default function CommentSection({ coupleId }: { coupleId: string }) {
         <button
           onClick={submit}
           disabled={busy || !nickname.trim() || !body.trim()}
-          className="w-full rounded-lg bg-accent/90 py-2.5 text-sm font-bold text-white disabled:opacity-40"
+          className="w-full rounded-xl bg-accent py-2.5 text-sm font-bold text-white shadow-md shadow-accent/20 disabled:opacity-40"
         >
           {busy ? "등록 중..." : "훈수 남기기"}
         </button>
         {msg && <p className="text-center text-xs font-semibold text-accent">{msg}</p>}
       </div>
 
-      <ul className="mt-4 space-y-2.5">
+      <ul className="mt-4 space-y-2">
         {comments.length === 0 && (
           <li className="py-4 text-center text-xs text-muted">
             아직 훈수가 없어요. 첫 훈수의 주인공이 되어보세요!
           </li>
         )}
         {comments.map((c) => (
-          <li key={c.id} className="flex items-start gap-2 rounded-lg bg-board/40 px-3 py-2.5">
+          <li
+            key={c.id}
+            className="flex items-start gap-2 rounded-2xl bg-panel-2/60 px-3 py-2.5"
+          >
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-bold text-gray-300">{c.nickname}</p>
-              <p className="mt-0.5 break-words text-sm text-gray-100">{c.body}</p>
+              <p className="text-xs font-bold text-accent">{c.nickname}</p>
+              <p className="mt-0.5 break-words text-sm text-ink">{c.body}</p>
             </div>
             <button
               onClick={() => report(c.id)}
-              className="shrink-0 text-xs opacity-50 hover:opacity-100"
+              className="shrink-0 text-xs opacity-40 hover:opacity-100"
               aria-label="신고"
               title="신고"
             >

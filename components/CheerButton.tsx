@@ -42,11 +42,11 @@ export default function CheerButton({
           setFloatOne(true);
           setTimeout(() => setPop(false), 400);
           setTimeout(() => setFloatOne(false), 950);
-          setToast("응원 완료! 내일 또 가능해요");
+          setToast("하트 전달 완료! 내일 또 줄 수 있어요");
           onCheered?.();
         }
       } else if (json.reason === "rate_limited") {
-        setToast("오늘 응원 한도에 도달했어요");
+        setToast("오늘 하트를 다 썼어요! 내일 만나요");
       } else {
         setToast("잠시 후 다시 시도해주세요");
       }
@@ -60,18 +60,18 @@ export default function CheerButton({
 
   const base =
     size === "lg"
-      ? "px-5 py-2.5 text-sm rounded-xl"
+      ? "px-6 py-2.5 text-sm rounded-full"
       : size === "icon"
         ? "h-9 w-9 rounded-full text-base leading-none flex items-center justify-center"
-        : "px-2.5 py-1.5 text-xs rounded-lg";
+        : "px-2.5 py-1.5 text-xs rounded-full";
   const label =
-    size === "icon" ? (done ? "💤" : "❤️") : done ? "내일 또 💤" : "❤️ 응원";
+    size === "icon" ? (done ? "🩷" : "🤍") : done ? "오늘의 하트 완료 🩷" : "🤍 하트 주기";
 
   return (
     <span className="relative inline-flex flex-col items-center">
       {floatOne && (
         <span className="pointer-events-none absolute -top-1 text-sm font-extrabold text-accent motion-safe:animate-float-up">
-          +1 ♥
+          +1 💖
         </span>
       )}
       <button
@@ -81,15 +81,15 @@ export default function CheerButton({
           pop ? "motion-safe:animate-heart-pop" : ""
         } ${
           done
-            ? "bg-panel-2 text-muted cursor-default"
-            : "bg-accent/15 text-accent hover:bg-accent/25 active:scale-95"
+            ? "bg-accent-soft/70 text-accent cursor-default"
+            : "bg-accent text-white shadow-md shadow-accent/25 hover:brightness-105 active:scale-95"
         }`}
-        aria-label={done ? "오늘 응원 완료" : "응원하기"}
+        aria-label={done ? "오늘 하트 완료" : "하트 주기"}
       >
         {label}
       </button>
       {toast && (
-        <span className="absolute -top-8 whitespace-nowrap rounded-md bg-panel-2 px-2 py-1 text-[11px] text-gray-200 shadow-lg z-10">
+        <span className="absolute -top-8 whitespace-nowrap rounded-lg bg-ink px-2 py-1 text-[11px] text-white shadow-lg z-10">
           {toast}
         </span>
       )}

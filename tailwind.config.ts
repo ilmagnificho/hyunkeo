@@ -9,13 +9,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        board: "#0F1522",
-        panel: "#161E30",
-        "panel-2": "#1C2640",
-        up: "#F04452",
-        down: "#3182F6",
-        accent: "#FF5C7A",
-        muted: "#8B93A7",
+        board: "#FFF7F0",      // 웜 크림 배경
+        panel: "#FFFFFF",      // 카드
+        "panel-2": "#FFEFE8",  // 서브 카드 (피치)
+        ink: "#43303B",        // 본문 (웜 다크)
+        up: "#FF4D6D",         // 순위 상승 ▲
+        down: "#7BA6E8",       // 순위 하락 ▼ (소프트 블루)
+        accent: "#FF5C8A",     // 메인 핑크
+        "accent-soft": "#FFE3EC",
+        gold: "#F0A93B",
+        lavender: "#B7A6FF",
+        muted: "#A58E99",
+        line: "#F6E3E9",       // 구분선
       },
       fontFamily: {
         sans: [
@@ -35,11 +40,11 @@ const config: Config = {
       },
       keyframes: {
         flashUp: {
-          "0%": { backgroundColor: "rgba(240, 68, 82, 0.22)" },
+          "0%": { backgroundColor: "rgba(255, 92, 138, 0.16)" },
           "100%": { backgroundColor: "transparent" },
         },
         flashDown: {
-          "0%": { backgroundColor: "rgba(49, 130, 246, 0.22)" },
+          "0%": { backgroundColor: "rgba(123, 166, 232, 0.16)" },
           "100%": { backgroundColor: "transparent" },
         },
         marquee: {

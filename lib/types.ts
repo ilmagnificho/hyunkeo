@@ -22,6 +22,7 @@ export interface BoardRow {
   todayCount: number;
   yesterdayCount: number;
   deltaPp: number;        // 어제 지지율 대비 %p
+  rankChange: number | null; // 어제 순위 대비 (+2 = 두 계단 상승, null = 신규 진입)
   spark7: number[];       // 최근 7일 일별 응원 수 (과거→오늘)
 }
 

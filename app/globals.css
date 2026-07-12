@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 html {
-  background-color: #0f1522;
+  background-color: #fff7f0;
 }
 
 body {
-  color: #e5e9f2;
+  color: #43303b;
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
 }

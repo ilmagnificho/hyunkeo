@@ -1,0 +1,113 @@
+# 현커거래소 💘📈
+
+넷플릭스 '모태솔로지만 연애는 하고 싶어 시즌2' 비공식 팬 서비스.
+커플 지지율을 주식 시세처럼 확인하고, 최종커플 예측을 락인해서 성지 카드를 받으세요.
+
+> "당신의 훈수, 이제 시세로 증명하세요"
+
+## 기능
+
+- **시세판** (`/`): 커플별 지지율, 전일 대비 등락(상승=빨강, 하락=파랑, KRX 관례), 7일 스파크라인, 1일 1응원
+- **예측 락인** (`/predict`): 라운드별(회차 공개 전 마감) 최종커플 1~3쌍 예측. 제출 후 수정 불가
+- **성지 카드** (`/card/[id]`): 1080x1350 캔버스 카드 → PNG 저장 / 링크 복사 / OG 미리보기
+- **커플 상세** (`/couple/[id]`): 14일 추이, 한 줄 훈수(60자, 금칙어 필터, 신고 3회 자동 블라인드)
+
+## 운영 원칙 (타협 불가)
+
+1. 출연자 사진/방송 캡처 사용 금지 — 이니셜 배지로만 표현
+2. 성(姓) 미표기 — 이름만 사용
+3. 로그인/개인정보 수집 없음 — 닉네임 + 기기 UUID(localStorage)만
+4. 자유게시판 없음 — 60자 한 줄 훈수만, 강한 모더레이션
+
+## 기술 스택
+
+- Next.js (App Router, TypeScript) + Tailwind CSS
+- Supabase (Postgres) — 모든 읽기/쓰기는 Route Handler에서 service role 키로만 수행 (RLS deny-all)
+- 차트: 인라인 SVG / 카드: 클라이언트 canvas
+
+## 로컬 실행
+
+### 1. Supabase 프로젝트 준비
+
+1. [supabase.com](https://supabase.com) 에서 새 프로젝트 생성
+2. SQL Editor 에서 `supabase/schema.sql` 내용 붙여넣고 실행
+3. 이어서 `supabase/seed.sql` 실행 (출연자 12명 / 커플 36개 / 라운드 3개 시드)
+4. Project Settings → API 에서 URL 과 `service_role` 키 확인
+
+> RLS는 전 테이블 활성화 + 정책 없음(deny-all) 상태입니다. anon 키로는 아무것도 읽고 쓸 수 없고, 서버의 service role 키만 데이터에 접근합니다. 의도된 설계이니 정책을 추가하지 마세요.
+
+### 2. 환경변수
+
+```bash
+cp .env.example .env.local
+```
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=eyJ...   # 서버 전용. 절대 NEXT_PUBLIC_ 금지
+```
+
+### 3. 실행
+
+```bash
+npm install
+npm run dev    # http://localhost:3000
+npm run build  # 프로덕션 빌드 확인
+```
+
+## Vercel 배포
+
+1. GitHub 리포지토리를 Vercel 에 Import
+2. Environment Variables 에 위 두 변수 등록 (`SUPABASE_SERVICE_ROLE_KEY` 는 반드시 서버 전용)
+3. Deploy — 끝. (프레임워크 자동 감지: Next.js)
+
+## 시즌 종영 후 운영 가이드
+
+### 1. 정답 입력
+
+최종회 공개 후 Supabase SQL Editor 에서 최종커플을 `results` 에 입력합니다:
+
+```sql
+-- 예: 재서-수지, 정윤-서윤 커플이 최종 성사된 경우
+insert into results (couple_id, is_final) values
+('m1-f5', true),
+('m2-f1', true);
+```
+
+### 2. 채점 로직 위치
+
+훈수 점수 채점은 아래 쿼리로 계산합니다 (라운드별 배점: R1=3점 / R2=2점 / R3=1점).
+`predictions.couple_ids` 배열에 정답 커플이 하나라도 포함되면 해당 라운드 적중입니다:
+
+```sql
+select p.nickname, p.device_id,
+       sum(r.points) as score
+from predictions p
+join rounds r on r.round_no = p.round_no
+where exists (
+  select 1 from results res
+  where res.is_final and res.couple_id = any(p.couple_ids)
+)
+group by p.nickname, p.device_id
+order by score desc;
+```
+
+리더보드 페이지(P1)를 붙일 때 이 쿼리를 `/api/leaderboard` Route Handler 로 옮기면 됩니다.
+적중자 성지 카드의 "선지자 인증" 골드 카드 업그레이드는 `results` 테이블 존재 여부를
+`/api/prediction/[id]` 에서 조회해 카드 렌더에 골드 테마를 적용하는 방식으로 확장하세요.
+
+### 3. 다음 시즌/다른 프로그램 재사용
+
+출연자·커플·라운드가 전부 데이터입니다. 코드에 출연자 이름이 하드코딩되어 있지 않으므로,
+새 `shows` / `cast_members` / `couples` / `rounds` 시드만 넣으면 그대로 재사용됩니다.
+
+## 모더레이션 운영
+
+- 금칙어 목록: `lib/moderation.ts` 의 `BANNED_WORDS` 배열 하나만 수정하면 됩니다. 공백/특수문자 우회는 자동 대응됩니다.
+- 신고 3회 누적 시 자동 블라인드 (`comments.hidden = true`).
+- 수동 블라인드: `update comments set hidden = true where id = '...';`
+
+## 면책
+
+본 사이트는 비공식 팬 서비스로, 넷플릭스 및 제작사와 무관합니다.
+출연자 비방/사생활 추측 콘텐츠를 금지합니다.

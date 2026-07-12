@@ -71,9 +71,13 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX                   # GA4 측정 ID (없으면 트�
 ## 출연자 페르소나 (마이그레이션)
 
 캐릭터 서사(캐치프레이즈/관전포인트)는 `supabase/migration-001-cast-personas.sql` 을
-SQL Editor 에서 실행하면 활성화됩니다. 문구는 방송 내용에 맞게 `update cast_members set
-tagline=..., bio=... where id='m1';` 으로 자유롭게 수정하세요. 마이그레이션을 실행하지
-않아도 사이트는 정상 동작합니다(페르소나 미표시).
+SQL Editor 에서 실행하면 활성화됩니다. 재실행해도 안전합니다(idempotent).
+
+현재 문구는 공개 방송 내용과 언론 보도(공식 프로필/제작발표회 기사) 기반입니다.
+회차가 공개될 때마다 `update cast_members set tagline=..., bio=... where id='m1';` 으로
+계속 업데이트하는 것을 추천합니다 — 도감이 살아있는 콘텐츠가 됩니다.
+사생활 추측/외모 품평 문구는 금지 원칙에 따라 넣지 마세요.
+마이그레이션을 실행하지 않아도 사이트는 정상 동작합니다(페르소나 미표시).
 
 ## 분석 (GA4)
 

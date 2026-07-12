@@ -16,7 +16,7 @@ function HeartHero({ data }: { data: BoardResponse }) {
   const todayTotal = data.rows.reduce((a, r) => a + r.todayCount, 0);
   return (
     <div className="mx-2 rounded-3xl bg-gradient-to-br from-accent-soft via-panel-2 to-panel p-5 border border-line shadow-sm">
-      <p className="text-[11px] font-bold tracking-wide text-muted">
+      <p className="text-xs font-bold tracking-wide text-muted">
         오늘 모인 하트
       </p>
       <p className="mt-1 flex items-baseline gap-1.5">
@@ -25,7 +25,7 @@ function HeartHero({ data }: { data: BoardResponse }) {
         </span>
         <span className="text-xl">💖</span>
       </p>
-      <p className="mt-2 text-[11px] text-muted tabular-nums">
+      <p className="mt-2 text-xs text-muted tabular-nums">
         누적 {data.totalCheers.toLocaleString()} 하트 · 하트는 매일 자정 리셋!
         오늘도 최애 커플에게 💌
       </p>
@@ -61,7 +61,7 @@ function TickerTape({ rows }: { rows: BoardRow[] }) {
       {items.map((r, i) => (
         <span
           key={r.coupleId}
-          className="mx-3 inline-flex items-center gap-1 text-[11px] tabular-nums"
+          className="mx-3 inline-flex items-center gap-1 text-xs tabular-nums"
         >
           <span className="font-bold text-accent">{i + 1}위</span>
           <span className="font-bold text-ink">
@@ -87,18 +87,18 @@ function TickerTape({ rows }: { rows: BoardRow[] }) {
 function RankChip({ change }: { change: number | null }) {
   if (change === null) {
     return (
-      <span className="rounded bg-accent-soft px-1 py-px text-[9px] font-extrabold text-accent">
+      <span className="rounded bg-accent-soft px-1 py-px text-[10px] font-extrabold text-accent">
         NEW
       </span>
     );
   }
   if (change === 0) {
-    return <span className="text-[10px] font-bold text-muted">―</span>;
+    return <span className="text-[11px] font-bold text-muted">―</span>;
   }
   const up = change > 0;
   return (
     <span
-      className="text-[10px] font-extrabold tabular-nums"
+      className="text-[11px] font-extrabold tabular-nums"
       style={{ color: up ? "#FF4D6D" : "#7BA6E8" }}
     >
       {up ? "▲" : "▼"}
@@ -109,7 +109,7 @@ function RankChip({ change }: { change: number | null }) {
 
 function MaegiBadge() {
   return (
-    <span className="rounded bg-lavender/15 px-1 py-0.5 text-[10px] font-bold text-lavender">
+    <span className="rounded bg-lavender/15 px-1 py-0.5 text-[11px] font-bold text-lavender">
       🐟 메기
     </span>
   );
@@ -169,7 +169,7 @@ function Row({
       </span>
       <span className="min-w-0 flex-1">
         <span className="flex items-center gap-1">
-          <span className="truncate text-[15px] font-bold text-ink">
+          <span className="truncate text-base font-bold text-ink">
             {row.m.name}
             <span className="mx-0.5 text-accent">♥</span>
             {row.f.name}
@@ -184,7 +184,7 @@ function Row({
             style={{ width: `${barPct}%` }}
           />
         </span>
-        <span className="mt-1 flex items-center gap-2 text-[11px] text-muted tabular-nums">
+        <span className="mt-1 flex items-center gap-2 text-xs text-muted tabular-nums">
           <span className="font-bold text-ink/70">{row.total.toLocaleString()}💖</span>
           <span>오늘 +{row.todayCount}</span>
         </span>
@@ -210,14 +210,14 @@ function EmptyRow({ couple, rank }: { couple: CoupleInfo; rank: number }) {
       </span>
       <span className="min-w-0 flex-1">
         <span className="flex items-center gap-1">
-          <span className="truncate text-[15px] font-bold text-ink">
+          <span className="truncate text-base font-bold text-ink">
             {couple.m.name}
             <span className="mx-0.5 text-accent">♥</span>
             {couple.f.name}
           </span>
           {isMaegi && <MaegiBadge />}
         </span>
-        <span className="mt-1 block text-[11px] text-muted">
+        <span className="mt-1 block text-xs text-muted">
           아직 하트 0개 · 첫 하트를 기다려요
         </span>
       </span>
@@ -377,7 +377,7 @@ export default function Board() {
           </div>
         </>
       )}
-      <p className="px-4 pt-3 text-[11px] text-muted tabular-nums">
+      <p className="px-4 pt-3 text-xs text-muted tabular-nums">
         순위는 누적 하트 기준 · 1분마다 자동 갱신 · 기기당 커플별 하루 1하트
       </p>
     </div>

@@ -4,6 +4,8 @@
 
 html {
   background-color: #fff7f0;
+  /* 가독성: rem 기반 타이포 전체를 한 단계 키운다 (기본 16 → 17.5px) */
+  font-size: 17.5px;
 }
 
 body {

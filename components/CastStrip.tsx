@@ -20,7 +20,7 @@ export default function CastStrip({ couples }: { couples: CoupleInfo[] }) {
     <div className="mt-4">
       <div className="flex items-baseline justify-between px-4">
         <p className="text-sm font-extrabold text-ink">출연자 도감 👀</p>
-        <Link href="/cast" className="text-[11px] font-bold text-accent">
+        <Link href="/cast" className="text-xs font-bold text-accent">
           전체 보기 →
         </Link>
       </div>
@@ -36,7 +36,7 @@ export default function CastStrip({ couples }: { couples: CoupleInfo[] }) {
               {m.name}
               {m.is_maegi && <span className="ml-0.5" title="메기">🐟</span>}
             </p>
-            <p className="mt-0.5 line-clamp-2 min-h-[2em] text-[10px] leading-tight text-muted">
+            <p className="mt-0.5 line-clamp-2 min-h-[2em] text-[11px] leading-tight text-muted">
               {m.tagline || m.emoji}
             </p>
           </Link>

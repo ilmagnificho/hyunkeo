@@ -81,7 +81,7 @@ export default function CastBook() {
                       <p className="flex items-center gap-1.5 text-base font-extrabold text-ink">
                         {m.name} <span className="text-sm">{m.emoji}</span>
                         {m.is_maegi && (
-                          <span className="rounded bg-lavender/20 px-1.5 py-0.5 text-[10px] font-bold text-lavender">
+                          <span className="rounded bg-lavender/20 px-1.5 py-0.5 text-[11px] font-bold text-lavender">
                             🐟 메기
                           </span>
                         )}
@@ -117,7 +117,7 @@ export default function CastBook() {
           </div>
         </section>
       ))}
-      <p className="mt-6 text-center text-[10px] leading-relaxed text-muted">
+      <p className="mt-6 text-center text-[11px] leading-relaxed text-muted">
         캐릭터 소개는 방송 컨셉을 바탕으로 한 팬 시점 관전 포인트이며
         실제 인물의 정보가 아닙니다.
       </p>

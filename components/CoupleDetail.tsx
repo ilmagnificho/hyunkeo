@@ -69,9 +69,9 @@ export default function CoupleDetail({ coupleId }: { coupleId: string }) {
       {/* 커플 카드 */}
       <div className="rounded-3xl bg-gradient-to-br from-accent-soft via-panel to-panel border border-line p-5 shadow-sm">
         <div className="flex items-center justify-between">
-          <p className="text-[11px] font-bold tracking-wide text-muted">커플 프로필</p>
+          <p className="text-xs font-bold tracking-wide text-muted">커플 프로필</p>
           {isMaegi && (
-            <span className="rounded bg-lavender/15 px-1.5 py-0.5 text-[10px] font-bold text-lavender">
+            <span className="rounded bg-lavender/15 px-1.5 py-0.5 text-[11px] font-bold text-lavender">
               🐟 메기 케미
             </span>
           )}
@@ -84,7 +84,7 @@ export default function CoupleDetail({ coupleId }: { coupleId: string }) {
               {couple.m.name} <span className="text-xs">{couple.m.emoji}</span>
             </p>
             {couple.m.tagline && (
-              <p className="mt-0.5 text-[10px] leading-tight text-muted">
+              <p className="mt-0.5 text-[11px] leading-tight text-muted">
                 &ldquo;{couple.m.tagline}&rdquo;
               </p>
             )}
@@ -96,7 +96,7 @@ export default function CoupleDetail({ coupleId }: { coupleId: string }) {
               {couple.f.name} <span className="text-xs">{couple.f.emoji}</span>
             </p>
             {couple.f.tagline && (
-              <p className="mt-0.5 text-[10px] leading-tight text-muted">
+              <p className="mt-0.5 text-[11px] leading-tight text-muted">
                 &ldquo;{couple.f.tagline}&rdquo;
               </p>
             )}
@@ -118,7 +118,7 @@ export default function CoupleDetail({ coupleId }: { coupleId: string }) {
               style={{ width: `${Math.max(tempPct, 3)}%` }}
             />
           </div>
-          <p className="mt-1.5 text-[10px] text-muted">
+          <p className="mt-1.5 text-[11px] text-muted">
             전체 하트에서 차지하는 비중이 높을수록 온도가 올라가요
           </p>
         </div>
@@ -128,19 +128,19 @@ export default function CoupleDetail({ coupleId }: { coupleId: string }) {
             <p className="text-base font-extrabold tabular-nums text-ink">
               {total.toLocaleString()}
             </p>
-            <p className="text-[10px] text-muted">받은 하트</p>
+            <p className="text-[11px] text-muted">받은 하트</p>
           </div>
           <div className="rounded-2xl bg-panel border border-line py-2.5">
             <p className="text-base font-extrabold tabular-nums text-ink">
               {sharePct.toFixed(1)}%
             </p>
-            <p className="text-[10px] text-muted">하트 점유율</p>
+            <p className="text-[11px] text-muted">하트 점유율</p>
           </div>
           <div className="rounded-2xl bg-panel border border-line py-2.5">
             <p className="text-base font-extrabold tabular-nums text-ink">
               {trendUp ? "🔥 상승" : "🌙 주춤"}
             </p>
-            <p className="text-[10px] text-muted">이번 주 화력</p>
+            <p className="text-[11px] text-muted">이번 주 화력</p>
           </div>
         </div>
 
@@ -162,7 +162,7 @@ export default function CoupleDetail({ coupleId }: { coupleId: string }) {
             />
           ))}
         </div>
-        <div className="mt-1 flex justify-between text-[10px] text-muted">
+        <div className="mt-1 flex justify-between text-[11px] text-muted">
           <span>2주 전</span>
           <span>오늘</span>
         </div>

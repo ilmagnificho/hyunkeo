@@ -91,7 +91,7 @@ export default function CheerButton({
         {label}
       </button>
       {toast && (
-        <span className="absolute -top-8 whitespace-nowrap rounded-lg bg-ink px-2 py-1 text-[11px] text-white shadow-lg z-10">
+        <span className="absolute -top-8 whitespace-nowrap rounded-lg bg-ink px-2 py-1 text-xs text-white shadow-lg z-10">
           {toast}
         </span>
       )}

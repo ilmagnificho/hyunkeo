@@ -96,7 +96,7 @@ export default function CommentSection({ coupleId }: { coupleId: string }) {
   return (
     <section className="mt-4 rounded-3xl bg-panel border border-line p-4 shadow-sm">
       <p className="text-sm font-bold text-ink">한 줄 훈수 💬</p>
-      <p className="mt-0.5 text-[11px] text-muted">
+      <p className="mt-0.5 text-xs text-muted">
         60자 이내 · 비방/외모품평/사생활 언급은 등록되지 않아요
       </p>
 
@@ -117,7 +117,7 @@ export default function CommentSection({ coupleId }: { coupleId: string }) {
             rows={2}
             className="w-full resize-none rounded-xl border border-line bg-board/60 px-3 py-2 text-sm text-ink placeholder:text-muted/60 focus:border-accent focus:outline-none"
           />
-          <span className="absolute bottom-2 right-2.5 text-[10px] text-muted tabular-nums">
+          <span className="absolute bottom-2 right-2.5 text-[11px] text-muted tabular-nums">
             {body.length}/60
           </span>
         </div>

@@ -6,8 +6,8 @@ export const DISCLAIMER =
 export default function Footer() {
   return (
     <footer className="mt-12 pb-10 px-4 text-center">
-      <p className="text-[11px] leading-relaxed text-muted/90">{DISCLAIMER}</p>
-      <p className="mt-2 text-[11px]">
+      <p className="text-xs leading-relaxed text-muted/90">{DISCLAIMER}</p>
+      <p className="mt-2 text-xs">
         <Link href="/about" className="text-muted underline underline-offset-2">
           현커거래소 소개
         </Link>

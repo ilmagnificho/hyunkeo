@@ -362,7 +362,7 @@ function CouplePicker({
               <Badge member={m} size={28} />
               <span className="text-sm font-semibold text-ink">{m.name}</span>
               {m.is_maegi && (
-                <span className="ml-auto rounded bg-lavender/15 px-1 py-0.5 text-[10px] font-bold text-lavender">
+                <span className="ml-auto rounded bg-lavender/15 px-1 py-0.5 text-[11px] font-bold text-lavender">
                   메기
                 </span>
               )}
@@ -390,7 +390,7 @@ function CouplePicker({
                 <Badge member={f} size={28} />
                 <span className="text-sm font-semibold text-ink">{f.name}</span>
                 {f.is_maegi && (
-                  <span className="ml-auto rounded bg-lavender/15 px-1 py-0.5 text-[10px] font-bold text-lavender">
+                  <span className="ml-auto rounded bg-lavender/15 px-1 py-0.5 text-[11px] font-bold text-lavender">
                     메기
                   </span>
                 )}

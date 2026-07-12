@@ -263,6 +263,26 @@ export function buildAvatar(spec: AvatarSpec): AvatarArt {
   };
 }
 
+/** SVG 문자열 (OG 이미지 등 서버 렌더용) */
+export function avatarSvg(spec: AvatarSpec, px = 12): string {
+  const art = buildAvatar(spec);
+  let rects = "";
+  for (let r = 0; r < art.size; r++) {
+    for (let c = 0; c < art.size; c++) {
+      const ch = art.grid[r][c];
+      if (ch === ".") continue;
+      rects += `<rect x="${c * px}" y="${r * px}" width="${px}" height="${px}" fill="${art.palette[ch]}"/>`;
+    }
+  }
+  const s = art.size * px;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${s}" height="${s}" shape-rendering="crispEdges">${rects}</svg>`;
+}
+
+/** <img src=...> 로 바로 쓸 수 있는 데이터 URI */
+export function avatarDataUri(spec: AvatarSpec, px = 12): string {
+  return `data:image/svg+xml,${encodeURIComponent(avatarSvg(spec, px))}`;
+}
+
 /** 캔버스에 도트 아바타 그리기 (성지 카드용) */
 export function drawAvatarOnCanvas(
   ctx: CanvasRenderingContext2D,

@@ -9,13 +9,31 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
+  let nickname = "";
+  try {
+    const { getServiceClient } = await import("@/lib/supabase");
+    const { data } = await getServiceClient()
+      .from("predictions")
+      .select("nickname")
+      .eq("id", id)
+      .maybeSingle();
+    nickname = data?.nickname ?? "";
+  } catch {
+    // 폴백
+  }
+  const who = nickname ? `${nickname}님` : "이 사람";
   return {
     title: "성지 카드 | 현커거래소",
-    description: "모솔연애2 최종커플 예측 락인 카드. 적중하면 이 카드는 성지가 됩니다.",
+    description: `${who}이 모솔연애2 최종커플을 락인했어요. 적중하면 이 카드는 성지가 됩니다.`,
     openGraph: {
-      title: "최종커플 예측 락인 완료 🔒 | 현커거래소",
-      description: "종영 후 적중 시 이 카드는 성지가 됩니다.",
+      title: `🔮 ${who}의 최종커플 픽 — 적중하면 성지`,
+      description: "누굴 골랐는지 확인하고, 나도 내 최애 커플 픽 락인하기 💘",
       images: [{ url: `/api/og?id=${id}`, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `🔮 ${who}의 최종커플 픽 — 적중하면 성지`,
+      images: [`/api/og?id=${id}`],
     },
   };
 }

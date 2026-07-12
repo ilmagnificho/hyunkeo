@@ -28,17 +28,19 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: {
     siteName: "현커거래소",
-    title: "현커거래소 - 모솔연애2 실시간 커플 차트 & 최종커플 픽",
-    description: "당신의 팬심, 이제 차트로 증명하세요 💘",
+    title: "💘 내 최애 커플, 지금 몇 위? — 모솔연애2 실시간 차트",
+    description:
+      "당신의 최애 커플에게 투표하세요! 매일 하트 리셋, 최종커플 픽 락인. 적중하면 그 픽이 성지가 됩니다 🔮",
     type: "website",
     locale: "ko_KR",
     url: "/",
-    images: [{ url: "/api/og", width: 1200, height: 630, alt: "현커거래소" }],
+    images: [{ url: "/api/og", width: 1200, height: 630, alt: "현커거래소 실시간 커플 차트" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "현커거래소 - 모솔연애2 실시간 커플 차트",
-    description: "당신의 팬심, 이제 차트로 증명하세요 💘",
+    title: "💘 내 최애 커플, 지금 몇 위? — 모솔연애2 실시간 차트",
+    description:
+      "당신의 최애 커플에게 투표하세요! 매일 하트 리셋, 적중하면 그 픽이 성지가 됩니다 🔮",
     images: ["/api/og"],
   },
   robots: { index: true, follow: true },

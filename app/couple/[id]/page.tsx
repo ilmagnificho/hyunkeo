@@ -29,11 +29,11 @@ export async function generateMetadata({
       if (m && f) {
         return {
           title: `${m}♥${f} 실시간 케미 온도·하트 순위`,
-          description: `모솔연애2 ${m}♥${f} 커플의 실시간 케미 온도와 하트 순위를 확인하고 응원해보세요. 한 줄 훈수도 남길 수 있어요.`,
+          description: `${m}♥${f}, 이 케미 진짜일까? 실시간 케미 온도 확인하고 하트로 투표하세요 💘 한 줄 훈수는 덤.`,
           alternates: { canonical: `/couple/${id}` },
           openGraph: {
             title: `${m}♥${f} 실시간 케미 차트 | 현커거래소`,
-            description: `모솔연애2 ${m}♥${f} 케미 온도, 지금 몇 도일까?`,
+            description: `${m}♥${f} 케미 온도, 지금 몇 도게? 🌡️ 하트 주고 확인하기`,
           },
         };
       }

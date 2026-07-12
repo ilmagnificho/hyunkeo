@@ -35,7 +35,7 @@ export default function CoupleDetail({ coupleId }: { coupleId: string }) {
   if (notFound) {
     return (
       <div className="py-16 text-center">
-        <p className="text-lg font-bold text-white">커플을 찾을 수 없어요</p>
+        <p className="text-lg font-bold text-white">종목을 찾을 수 없어요</p>
         <Link href="/" className="mt-4 inline-block text-sm text-accent underline">
           시세판으로 →
         </Link>
@@ -44,57 +44,83 @@ export default function CoupleDetail({ coupleId }: { coupleId: string }) {
   }
   if (!data) {
     return (
-      <p className="py-16 text-center text-sm text-muted animate-pulse">불러오는 중...</p>
+      <p className="py-16 text-center text-sm text-muted animate-pulse">종목 정보 조회 중...</p>
     );
   }
 
   const { couple, total, sharePct, daily14 } = data;
   const isMaegi = couple.m.is_maegi || couple.f.is_maegi;
   const max = Math.max(...daily14, 1);
+  const week1 = daily14.slice(0, 7).reduce((a, b) => a + b, 0);
+  const week2 = daily14.slice(7).reduce((a, b) => a + b, 0);
+  const trend = week2 - week1;
 
   return (
     <div>
-      {/* 헤더 */}
-      <div className="rounded-2xl bg-panel p-5 text-center">
-        <div className="flex items-center justify-center -space-x-2">
-          <Badge member={couple.m} size={56} />
-          <Badge member={couple.f} size={56} />
-        </div>
-        <p className="mt-3 text-lg font-extrabold text-white">
-          {couple.m.name} <span className="text-accent">♥</span> {couple.f.name}
+      {/* 종목 헤더 */}
+      <div className="rounded-2xl bg-gradient-to-br from-panel-2 to-panel border border-white/5 p-5">
+        <div className="flex items-center justify-between">
+          <p className="font-mono text-[11px] tracking-widest text-muted uppercase">
+            KRX-LOVE · {couple.id}
+          </p>
           {isMaegi && (
-            <span className="ml-2 align-middle rounded bg-amber-400/15 px-1.5 py-0.5 text-[10px] font-bold text-amber-300">
-              메기
+            <span className="rounded bg-amber-400/15 px-1.5 py-0.5 text-[10px] font-bold text-amber-300">
+              🐟 메기 관련주
             </span>
           )}
-        </p>
-        <div className="mt-4 flex justify-center gap-8">
-          <div>
-            <p className="text-2xl font-extrabold tabular-nums text-white">
-              {sharePct.toFixed(1)}%
+        </div>
+
+        <div className="mt-4 flex items-center justify-center gap-3">
+          <div className="text-center">
+            <Badge member={couple.m} size={72} />
+            <p className="mt-1.5 text-sm font-bold text-gray-100">
+              {couple.m.name} <span className="text-xs">{couple.m.emoji}</span>
             </p>
-            <p className="text-[11px] text-muted">지지율</p>
           </div>
-          <div>
-            <p className="text-2xl font-extrabold tabular-nums text-white">
-              {total.toLocaleString()}
+          <span className="text-2xl text-accent">♥</span>
+          <div className="text-center">
+            <Badge member={couple.f} size={72} />
+            <p className="mt-1.5 text-sm font-bold text-gray-100">
+              {couple.f.name} <span className="text-xs">{couple.f.emoji}</span>
             </p>
-            <p className="text-[11px] text-muted">총 응원</p>
           </div>
         </div>
-        <div className="mt-4">
+
+        <div className="mt-5 grid grid-cols-3 gap-2 text-center">
+          <div className="rounded-xl bg-black/20 py-2.5">
+            <p className="text-lg font-extrabold tabular-nums text-white">{sharePct.toFixed(1)}%</p>
+            <p className="text-[10px] text-muted">지지율</p>
+          </div>
+          <div className="rounded-xl bg-black/20 py-2.5">
+            <p className="text-lg font-extrabold tabular-nums text-white">
+              {total.toLocaleString()}
+            </p>
+            <p className="text-[10px] text-muted">총 응원</p>
+          </div>
+          <div className="rounded-xl bg-black/20 py-2.5">
+            <p
+              className="text-lg font-extrabold tabular-nums"
+              style={{ color: trend >= 0 ? "#F04452" : "#3182F6" }}
+            >
+              {trend >= 0 ? "▲" : "▼"}{Math.abs(trend)}
+            </p>
+            <p className="text-[10px] text-muted">주간 모멘텀</p>
+          </div>
+        </div>
+
+        <div className="mt-4 text-center">
           <CheerButton coupleId={coupleId} size="lg" onCheered={load} />
         </div>
       </div>
 
       {/* 14일 바 차트 */}
-      <div className="mt-4 rounded-2xl bg-panel p-4">
+      <div className="mt-4 rounded-2xl bg-panel border border-white/5 p-4">
         <p className="text-xs font-bold text-muted">최근 14일 응원 추이</p>
         <div className="mt-3 flex h-20 items-end gap-1">
           {daily14.map((v, i) => (
             <div
               key={i}
-              className="flex-1 rounded-t bg-accent/60"
+              className={`flex-1 rounded-t ${i >= 7 ? "bg-accent/70" : "bg-accent/30"}`}
               style={{ height: `${Math.max((v / max) * 100, v > 0 ? 8 : 2)}%` }}
               title={`${v}회`}
             />

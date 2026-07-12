@@ -10,10 +10,12 @@ export default function CheerButton({
 }: {
   coupleId: string;
   onCheered?: () => void;
-  size?: "sm" | "lg";
+  size?: "sm" | "lg" | "icon";
 }) {
   const [done, setDone] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [pop, setPop] = useState(false);
+  const [floatOne, setFloatOne] = useState(false);
   const [toast, setToast] = useState("");
 
   useEffect(() => {
@@ -36,6 +38,10 @@ export default function CheerButton({
         markCheeredToday(coupleId);
         setDone(true);
         if (json.ok) {
+          setPop(true);
+          setFloatOne(true);
+          setTimeout(() => setPop(false), 400);
+          setTimeout(() => setFloatOne(false), 950);
           setToast("응원 완료! 내일 또 가능해요");
           onCheered?.();
         }
@@ -55,21 +61,32 @@ export default function CheerButton({
   const base =
     size === "lg"
       ? "px-5 py-2.5 text-sm rounded-xl"
-      : "px-2.5 py-1.5 text-xs rounded-lg";
+      : size === "icon"
+        ? "h-9 w-9 rounded-full text-base leading-none flex items-center justify-center"
+        : "px-2.5 py-1.5 text-xs rounded-lg";
+  const label =
+    size === "icon" ? (done ? "💤" : "❤️") : done ? "내일 또 💤" : "❤️ 응원";
 
   return (
     <span className="relative inline-flex flex-col items-center">
+      {floatOne && (
+        <span className="pointer-events-none absolute -top-1 text-sm font-extrabold text-accent motion-safe:animate-float-up">
+          +1 ♥
+        </span>
+      )}
       <button
         onClick={cheer}
         disabled={done || busy}
-        className={`${base} font-semibold transition-colors ${
+        className={`${base} font-bold transition-colors ${
+          pop ? "motion-safe:animate-heart-pop" : ""
+        } ${
           done
             ? "bg-panel-2 text-muted cursor-default"
             : "bg-accent/15 text-accent hover:bg-accent/25 active:scale-95"
         }`}
         aria-label={done ? "오늘 응원 완료" : "응원하기"}
       >
-        {done ? "내일 또 응원" : "❤️ +1"}
+        {label}
       </button>
       {toast && (
         <span className="absolute -top-8 whitespace-nowrap rounded-md bg-panel-2 px-2 py-1 text-[11px] text-gray-200 shadow-lg z-10">

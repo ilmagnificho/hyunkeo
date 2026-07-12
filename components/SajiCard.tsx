@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { formatKstTimestamp } from "@/lib/kst";
+import { drawAvatarOnCanvas } from "@/lib/pixelart";
 import type { PredictionData } from "@/lib/types";
 
 const W = 1080;
@@ -89,20 +90,27 @@ export default function SajiCard({ predictionId }: { predictionId: string }) {
       roundRect(ctx, 120, cy - 70, W - 240, 140, 28);
       ctx.fill();
 
-      // 남자 배지
-      drawBadge(ctx, W / 2 - 250, cy, 55, c.m.color, c.m.name.charAt(0), c.m.emoji, fontStack);
-      // 하트
+      // 도트 아바타 (남 · 여)
+      const AV = 110;
+      ctx.fillStyle = `${c.m.color}2E`;
+      roundRect(ctx, W / 2 - 320, cy - AV / 2, AV, AV, 18);
+      ctx.fill();
+      drawAvatarOnCanvas(ctx, c.m, W / 2 - 320, cy - AV / 2, AV);
+
       ctx.fillStyle = "#FF5C7A";
       ctx.font = `700 52px ${fontStack}`;
-      ctx.fillText("♥", W / 2 - 130, cy + 18);
-      // 여자 배지
-      drawBadge(ctx, W / 2 - 30, cy, 55, c.f.color, c.f.name.charAt(0), c.f.emoji, fontStack);
+      ctx.fillText("♥", W / 2 - 155, cy + 18);
+
+      ctx.fillStyle = `${c.f.color}2E`;
+      roundRect(ctx, W / 2 - 100, cy - AV / 2, AV, AV, 18);
+      ctx.fill();
+      drawAvatarOnCanvas(ctx, c.f, W / 2 - 100, cy - AV / 2, AV);
 
       // 이름
       ctx.fillStyle = "#FFFFFF";
       ctx.font = `700 54px ${fontStack}`;
       ctx.textAlign = "left";
-      ctx.fillText(`${c.m.name} · ${c.f.name}`, W / 2 + 70, cy + 20);
+      ctx.fillText(`${c.m.name} · ${c.f.name}`, W / 2 + 50, cy + 20);
       ctx.textAlign = "center";
     });
 
@@ -230,26 +238,3 @@ function roundRect(
   ctx.closePath();
 }
 
-function drawBadge(
-  ctx: CanvasRenderingContext2D,
-  cx: number,
-  cy: number,
-  r: number,
-  color: string,
-  initial: string,
-  emoji: string,
-  fontStack: string
-) {
-  ctx.beginPath();
-  ctx.arc(cx, cy, r, 0, Math.PI * 2);
-  ctx.fillStyle = color;
-  ctx.fill();
-
-  ctx.fillStyle = "#0F1522";
-  ctx.font = `800 ${r * 0.85}px ${fontStack}`;
-  ctx.textAlign = "center";
-  ctx.fillText(initial, cx, cy + r * 0.3);
-
-  ctx.font = `${r * 0.6}px ${fontStack}`;
-  ctx.fillText(emoji, cx + r * 0.75, cy + r * 0.85);
-}

@@ -19,8 +19,11 @@ export default function TopBar() {
     <header className="sticky top-0 z-20 border-b border-white/5 bg-board/90 backdrop-blur">
       <div className="mx-auto flex max-w-lg items-center justify-between gap-2 px-4 py-3">
         <div className="min-w-0">
-          <Link href="/" className="text-base font-extrabold tracking-tight text-white">
-            현커거래소
+          <Link href="/" className="flex items-center gap-1.5 text-base font-extrabold tracking-tight text-white">
+            <span className="text-accent">♥</span>현커거래소
+            <span className="rounded bg-up/15 px-1 py-px text-[9px] font-bold text-up tracking-wider">
+              LIVE
+            </span>
           </Link>
           <div className="mt-0.5">
             {round && !round.closed && round.round ? (

@@ -10,8 +10,21 @@ export async function GET(
   _req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
+  if (process.env.MOCK_DATA === "1") {
+    const { mockCouples } = await import("@/lib/mock");
+    const c = mockCouples().find((x) => x.id === id);
+    if (!c) return NextResponse.json({ ok: false, reason: "not_found" }, { status: 404 });
+    return NextResponse.json({
+      ok: true,
+      couple: c,
+      total: 312,
+      sharePct: 12.4,
+      daily14: [3, 8, 12, 9, 20, 31, 28, 35, 22, 41, 38, 29, 24, 12],
+      dates14: [],
+    });
+  }
   try {
-    const { id } = await params;
     const sb = getServiceClient();
 
     const { data: couple, error: coupleErr } = await sb

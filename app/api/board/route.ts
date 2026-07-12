@@ -16,6 +16,10 @@ interface CoupleRowDb {
 }
 
 export async function GET() {
+  if (process.env.MOCK_DATA === "1") {
+    const { mockBoard } = await import("@/lib/mock");
+    return NextResponse.json(mockBoard());
+  }
   try {
     if (cache && Date.now() - cache.at < CACHE_MS) {
       return NextResponse.json(cache.data);

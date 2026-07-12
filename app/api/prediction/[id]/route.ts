@@ -11,6 +11,23 @@ export async function GET(
   _req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id: mockId } = await params;
+  if (process.env.MOCK_DATA === "1") {
+    const { mockCouples } = await import("@/lib/mock");
+    const couples = mockCouples().slice(0, 2);
+    return NextResponse.json({
+      ok: true,
+      prediction: {
+        id: mockId,
+        round_no: 1,
+        round_label: "5-6회 공개 전",
+        nickname: "훈수왕참견러",
+        couple_ids: couples.map((c) => c.id),
+        couples,
+        created_at: new Date().toISOString(),
+      },
+    });
+  }
   try {
     const { id } = await params;
     if (!UUID_RE.test(id)) {

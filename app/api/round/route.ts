@@ -5,6 +5,13 @@ import type { RoundResponse } from "@/lib/types";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
+  if (process.env.MOCK_DATA === "1") {
+    return NextResponse.json({
+      closed: false,
+      round: { round_no: 1, label: "5-6회 공개 전", lock_at: "2026-07-14T16:59:59+09:00", points: 3 },
+      serverTime: new Date().toISOString(),
+    } satisfies RoundResponse);
+  }
   try {
     const sb = getServiceClient();
     const now = new Date().toISOString();

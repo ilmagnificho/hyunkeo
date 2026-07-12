@@ -4,6 +4,15 @@ import { getServiceClient } from "@/lib/supabase";
 export const dynamic = "force-dynamic";
 
 export async function GET(req: Request) {
+  if (process.env.MOCK_DATA === "1") {
+    return NextResponse.json({
+      ok: true,
+      comments: [
+        { id: "c1", nickname: "눈빛감별사", body: "3화 편의점 씬 눈빛 보고 왔는데 이건 진짜다", created_at: new Date().toISOString() },
+        { id: "c2", nickname: "훈수9단", body: "메기 등판해도 안 흔들릴 조합", created_at: new Date().toISOString() },
+      ],
+    });
+  }
   try {
     const { searchParams } = new URL(req.url);
     const coupleId = searchParams.get("coupleId");

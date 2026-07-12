@@ -1,5 +1,6 @@
 "use client";
 
+import { api } from "@/lib/api";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import Badge from "./Badge";
@@ -15,7 +16,7 @@ export default function CastBook() {
   const [data, setData] = useState<BoardResponse | null>(null);
 
   useEffect(() => {
-    fetch("/api/board")
+    fetch(api("/api/board"))
       .then((r) => r.json())
       .then(setData)
       .catch(() => {});

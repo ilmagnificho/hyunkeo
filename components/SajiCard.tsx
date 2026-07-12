@@ -1,5 +1,6 @@
 "use client";
 
+import { api, SITE_DISPLAY } from "@/lib/api";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { formatKstTimestamp } from "@/lib/kst";
@@ -23,7 +24,7 @@ export default function SajiCard({ predictionId }: { predictionId: string }) {
   const [toast, setToast] = useState("");
 
   useEffect(() => {
-    fetch(`/api/prediction/${predictionId}`)
+    fetch(api(`/api/prediction/${predictionId}`))
       .then((r) => r.json())
       .then((json) => {
         if (json.ok) setPred(json.prediction);
@@ -145,7 +146,7 @@ export default function SajiCard({ predictionId }: { predictionId: string }) {
     ctx.fillStyle = MUTED;
     ctx.font = `500 30px ${fontStack}`;
     ctx.fillText(
-      "적중하면 이 카드는 성지가 됩니다 · hyunkeo.vercel.app",
+      `적중하면 이 카드는 성지가 됩니다 · ${SITE_DISPLAY}`,
       W / 2,
       H - 105
     );

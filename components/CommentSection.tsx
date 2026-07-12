@@ -1,5 +1,6 @@
 "use client";
 
+import { api } from "@/lib/api";
 import { useCallback, useEffect, useState } from "react";
 import {
   getDeviceId,
@@ -19,7 +20,7 @@ export default function CommentSection({ coupleId }: { coupleId: string }) {
   const [msg, setMsg] = useState("");
 
   const load = useCallback(() => {
-    fetch(`/api/comments?coupleId=${encodeURIComponent(coupleId)}`)
+    fetch(api(`/api/comments?coupleId=${encodeURIComponent(coupleId)}`))
       .then((r) => r.json())
       .then((json) => {
         if (json.ok) setComments(json.comments);
@@ -43,7 +44,7 @@ export default function CommentSection({ coupleId }: { coupleId: string }) {
     if (!nick || !text || busy) return;
     setBusy(true);
     try {
-      const res = await fetch("/api/comment", {
+      const res = await fetch(api("/api/comment"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ coupleId, deviceId: getDeviceId(), nickname: nick, body: text }),
@@ -75,7 +76,7 @@ export default function CommentSection({ coupleId }: { coupleId: string }) {
       return;
     }
     try {
-      const res = await fetch("/api/report", {
+      const res = await fetch(api("/api/report"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ commentId, deviceId: getDeviceId() }),

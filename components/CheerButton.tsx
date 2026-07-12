@@ -1,5 +1,6 @@
 "use client";
 
+import { api } from "@/lib/api";
 import { useEffect, useState } from "react";
 import { getDeviceId, hasCheeredToday, markCheeredToday } from "@/lib/device";
 import { track } from "@/lib/analytics";
@@ -29,7 +30,7 @@ export default function CheerButton({
     if (done || busy) return;
     setBusy(true);
     try {
-      const res = await fetch("/api/cheer", {
+      const res = await fetch(api("/api/cheer"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ coupleId, deviceId: getDeviceId() }),

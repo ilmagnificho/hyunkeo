@@ -1,5 +1,6 @@
 "use client";
 
+import { api } from "@/lib/api";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import Badge from "./Badge";
@@ -24,7 +25,7 @@ export default function CoupleDetail({ coupleId }: { coupleId: string }) {
   const [notFound, setNotFound] = useState(false);
 
   const load = useCallback(() => {
-    fetch(`/api/couple/${coupleId}`)
+    fetch(api(`/api/couple/${coupleId}`))
       .then((r) => r.json())
       .then((json) => {
         if (json.ok) setData(json);

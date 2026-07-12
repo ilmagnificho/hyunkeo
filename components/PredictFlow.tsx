@@ -1,5 +1,6 @@
 "use client";
 
+import { api } from "@/lib/api";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -25,7 +26,7 @@ export default function PredictFlow() {
 
   useEffect(() => {
     setNickname(getSavedNickname());
-    fetch("/api/round")
+    fetch(api("/api/round"))
       .then((r) => r.json())
       .then((r: RoundResponse) => {
         setRound(r);
@@ -36,7 +37,7 @@ export default function PredictFlow() {
         }
       })
       .catch(() => setRound({ closed: true, serverTime: "" }));
-    fetch("/api/board")
+    fetch(api("/api/board"))
       .then((r) => r.json())
       .then((b: BoardResponse) => setCouples(b.couples ?? []))
       .catch(() => {});
@@ -67,7 +68,7 @@ export default function PredictFlow() {
     setSubmitting(true);
     setErrorMsg("");
     try {
-      const res = await fetch("/api/predict", {
+      const res = await fetch(api("/api/predict"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

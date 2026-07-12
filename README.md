@@ -64,9 +64,60 @@ npm run build  # 프로덕션 빌드 확인
 ### 선택 환경변수
 
 ```
-NEXT_PUBLIC_SITE_URL=https://hyunkeo.vercel.app  # 커스텀 도메인 쓰면 변경 (OG/sitemap 기준 URL)
+NEXT_PUBLIC_SITE_URL=https://hyunkeo.vercel.app  # 커스텀 도메인 쓰면 변경 (OG/sitemap/카드 표기 기준 URL)
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX                   # GA4 측정 ID (없으면 트래킹 비활성)
+NEXT_PUBLIC_BASE_PATH=                            # 서브패스 서빙 시에만 설정 (예: /hyunkeo)
 ```
+
+## 커스텀 도메인 서브패스 서빙 (yoongjae.com/hyunkeo)
+
+이 앱을 별도 도메인의 하위 경로에 붙이는 표준 패턴은 **프록시(rewrite) + basePath** 입니다.
+메인 사이트 디자인과는 완전히 무관하게, 이 앱이 통째로 그 경로에서 서빙됩니다.
+
+### 1) 이 앱(hyunkeo Vercel 프로젝트)에 환경변수 추가 후 재배포
+
+```
+NEXT_PUBLIC_BASE_PATH=/hyunkeo
+NEXT_PUBLIC_SITE_URL=https://yoongjae.com/hyunkeo
+```
+
+이러면 앱이 `/hyunkeo` 프리픽스로 빌드됩니다 (hyunkeo.vercel.app/hyunkeo 에서 동작,
+루트 접속은 /hyunkeo 로 리다이렉트).
+
+### 2) yoongjae.com 쪽에서 /hyunkeo 를 프록시
+
+**yoongjae.com 이 Vercel(Next.js) 프로젝트인 경우** — 해당 프로젝트에 `vercel.json` 추가:
+
+```json
+{
+  "rewrites": [
+    { "source": "/hyunkeo", "destination": "https://hyunkeo.vercel.app/hyunkeo" },
+    { "source": "/hyunkeo/:path*", "destination": "https://hyunkeo.vercel.app/hyunkeo/:path*" }
+  ]
+}
+```
+
+(Next.js 프로젝트라면 `next.config.js` 의 `rewrites()` 에 같은 규칙을 넣어도 됩니다)
+
+**nginx 인 경우:**
+
+```nginx
+location /hyunkeo {
+  proxy_pass https://hyunkeo.vercel.app;
+  proxy_set_header Host hyunkeo.vercel.app;
+  proxy_ssl_server_name on;
+}
+```
+
+**Cloudflare 를 쓰는 경우:** Workers Route 또는 Origin Rules 로 `/hyunkeo*` 를
+`hyunkeo.vercel.app` 으로 오리진 변경.
+
+### 3) 주의사항
+
+- 서브패스 방식에서는 `yoongjae.com/robots.txt` 가 메인 사이트 소유입니다.
+  sitemap 은 Google Search Console 에서 `https://yoongjae.com/hyunkeo/sitemap.xml` 을 직접 제출하세요.
+- 더 간단한 대안: **서브도메인** (`hyunkeo.yoongjae.com`) — Vercel 프로젝트에 도메인 추가 +
+  DNS CNAME 한 줄이면 끝나고 위 basePath/프록시 설정이 전부 불필요합니다.
 
 ## 출연자 페르소나 (마이그레이션)
 

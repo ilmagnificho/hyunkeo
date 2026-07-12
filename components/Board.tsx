@@ -1,5 +1,6 @@
 "use client";
 
+import { api } from "@/lib/api";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Badge from "./Badge";
@@ -250,7 +251,7 @@ export default function Board() {
 
   const load = useCallback(async () => {
     try {
-      const res = await fetch("/api/board");
+      const res = await fetch(api("/api/board"));
       if (!res.ok) throw new Error("board failed");
       const json: BoardResponse = await res.json();
 

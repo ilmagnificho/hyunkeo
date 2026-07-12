@@ -1,5 +1,6 @@
 "use client";
 
+import { api } from "@/lib/api";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Countdown from "./Countdown";
@@ -9,7 +10,7 @@ export default function TopBar() {
   const [round, setRound] = useState<RoundResponse | null>(null);
 
   useEffect(() => {
-    fetch("/api/round")
+    fetch(api("/api/round"))
       .then((r) => r.json())
       .then(setRound)
       .catch(() => {});

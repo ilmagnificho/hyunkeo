@@ -67,6 +67,8 @@ npm run build  # 프로덕션 빌드 확인
 NEXT_PUBLIC_SITE_URL=https://hyunkeo.vercel.app  # 커스텀 도메인 쓰면 변경 (OG/sitemap/카드 표기 기준 URL)
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX                   # GA4 측정 ID (없으면 트래킹 비활성)
 NEXT_PUBLIC_BASE_PATH=                            # 서브패스 서빙 시에만 설정 (예: /hyunkeo)
+NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=             # Search Console HTML 태그 인증 코드 (content 값만)
+NEXT_PUBLIC_NAVER_SITE_VERIFICATION=              # 네이버 서치어드바이저 인증 코드 (content 값만)
 ```
 
 ## 커스텀 도메인 서브패스 서빙 (yoongjae.com/hyunkeo)

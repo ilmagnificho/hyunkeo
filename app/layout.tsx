@@ -42,6 +42,19 @@ export const metadata: Metadata = {
     images: ["/api/og"],
   },
   robots: { index: true, follow: true },
+  // 검색엔진 소유 확인 (환경변수에 인증 코드만 넣으면 됨)
+  verification: {
+    ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+      ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+      : {}),
+    ...(process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION
+      ? {
+          other: {
+            "naver-site-verification": process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION,
+          },
+        }
+      : {}),
+  },
 };
 
 export const viewport: Viewport = {

@@ -69,6 +69,7 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX                   # GA4 측정 ID (없으면 트�
 NEXT_PUBLIC_BASE_PATH=                            # 서브패스 서빙 시에만 설정 (예: /hyunkeo)
 NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=             # Search Console HTML 태그 인증 코드 (content 값만)
 NEXT_PUBLIC_NAVER_SITE_VERIFICATION=              # 네이버 서치어드바이저 인증 코드 (content 값만)
+NEXT_PUBLIC_CF_BEACON_TOKEN=                      # Cloudflare Web Analytics 비컨 토큰 (수동 설치용)
 ```
 
 ## 커스텀 도메인 서브패스 서빙 (yoongjae.com/hyunkeo)

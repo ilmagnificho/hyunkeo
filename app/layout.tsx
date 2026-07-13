@@ -4,6 +4,7 @@ import "./globals.css";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://hyunkeo.vercel.app";
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+const CF_BEACON = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -93,6 +94,14 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-board font-sans">
         {children}
+        {CF_BEACON && (
+          <Script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={`{"token": "${CF_BEACON}"}`}
+            strategy="afterInteractive"
+          />
+        )}
         {GA_ID && (
           <>
             <Script

@@ -101,6 +101,16 @@ export default function RootLayout({
             />
             <Script id="ga4-init" strategy="afterInteractive">
               {`
+                // 운영자 기기 제외: /?owner=1 로 한 번 접속하면 이 기기는 영구 집계 제외
+                // (해제: /?owner=0)
+                try {
+                  var q = new URLSearchParams(location.search);
+                  if (q.get('owner') === '1') localStorage.setItem('hyunkeo_owner', '1');
+                  if (q.get('owner') === '0') localStorage.removeItem('hyunkeo_owner');
+                  if (localStorage.getItem('hyunkeo_owner') === '1') {
+                    window['ga-disable-${GA_ID}'] = true;
+                  }
+                } catch (e) {}
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
